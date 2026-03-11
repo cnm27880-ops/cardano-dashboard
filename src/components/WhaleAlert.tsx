@@ -15,6 +15,55 @@ export interface WhaleTransaction {
 
 export function useWhaleAlerts() {
   const [transactions, setTransactions] = useState<WhaleTransaction[]>([]);
+  const [loading, setLoading] = useState(true);
+  const lastBlockHash = useRef<string | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+
+    const fetchLatestBlockAndTxs = async () => {
+      try {
+        const url = new URL("/api/whale-alerts", window.location.origin);
+        if (lastBlockHash.current) {
+          url.searchParams.set("lastHash", lastBlockHash.current);
+        }
+
+        const res = await fetch(url.toString());
+        if (!res.ok) throw new Error("Failed to fetch whale alerts");
+
+        const data = await res.json();
+
+        if (data.latestHash) {
+          lastBlockHash.current = data.latestHash;
+        }
+
+        const newWhaleTxs: WhaleTransaction[] = data.transactions || [];
+
+        if (newWhaleTxs.length > 0 && mounted) {
+           setTransactions((prev) => {
+             const combined = [...newWhaleTxs, ...prev];
+             // Remove duplicates based on ID and keep top 10
+             const unique = Array.from(new Map(combined.map(item => [item.id, item])).values());
+             return unique.sort((a, b) => b.timestamp - a.timestamp).slice(0, 10);
+           });
+        }
+      } catch (error) {
+        console.error("Error polling whale alerts:", error);
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    };
+
+    // Initial fetch
+    fetchLatestBlockAndTxs();
+
+    // Poll every 20 seconds
+    const interval = setInterval(fetchLatestBlockAndTxs, 20000);
+
+    return () => {
+      mounted = false;
+      clearInterval(interval);
+    };
 
   useEffect(() => {
     const generateHash = (len: number) => {
@@ -91,6 +140,8 @@ export default function WhaleAlert() {
 
   if (!loading && transactions.length === 0) {
       return (
+       <div className="flex-1 flex flex-col items-center justify-center border border-white/5 rounded-lg bg-black/20 p-4 min-h-[200px]">
+          <span className="text-gray-500 font-mono text-sm">目前無大額交易 (&gt;1M ADA)</span>
        <div className="flex-1 flex flex-col items-center justify-center border border-white/5 rounded-lg bg-black/20">
           <Activity className="text-cyber-red animate-spin mb-3" size={24} />
           <span className="text-cyber-red font-mono text-sm animate-pulse">掃描記憶體池中...</span>
@@ -108,6 +159,11 @@ export default function WhaleAlert() {
        {/* List Header */}
        <div className="flex justify-between items-center px-4 py-3 sm:px-5 sm:py-3 border-b border-white/10 bg-black/40">
           <div className="flex items-center gap-2">
+            <div className="w-1.5 h-1.5 rounded-full bg-cyber-red animate-ping"></div>
+            <span className="text-[8px] sm:text-[10px] text-gray-500 font-mono uppercase tracking-widest">即時動態</span>
+          </div>
+          <span className="text-[8px] sm:text-[10px] text-gray-500 font-mono tracking-widest hidden sm:inline">主網連線中</span>
+          <span className="text-[8px] sm:text-[10px] text-gray-500 font-mono tracking-widest sm:hidden">主網</span>
             <div className="w-1.5 h-1.5 rounded-full bg-cyber-red animate-ping"></div>            <span className="text-[10px] text-gray-500 font-mono uppercase tracking-widest">即時動態</span>
           </div>
           <span className="text-[10px] text-gray-500 font-mono tracking-widest">主網連線中</span>
@@ -137,6 +193,13 @@ export default function WhaleAlert() {
                  <div className="flex justify-between items-start mb-2 sm:mb-3">
                     <div className="flex items-center gap-2">
                       {isCritical ? (
+                         <div className="flex items-center gap-1 sm:gap-1.5 bg-cyber-red/20 border border-cyber-red/50 text-cyber-red px-1.5 sm:px-2 py-0.5 rounded text-[8px] sm:text-[10px] font-bold tracking-widest uppercase animate-pulse">
+                           <ShieldAlert size={10} className="sm:w-3 sm:h-3" />
+                           巨鯨交易
+                         </div>
+                      ) : (
+                         <div className="flex items-center gap-1 sm:gap-1.5 bg-cyber-orange/10 border border-cyber-orange/30 text-cyber-orange px-1.5 sm:px-2 py-0.5 rounded text-[8px] sm:text-[10px] font-bold tracking-widest uppercase">
+                           大額交易
                          <div className="flex items-center gap-1.5 bg-cyber-red/20 border border-cyber-red/50 text-cyber-red px-2 py-0.5 rounded text-[10px] font-bold tracking-widest uppercase animate-pulse">
                            <ShieldAlert size={12} />
                            嚴重警報
@@ -154,6 +217,10 @@ export default function WhaleAlert() {
                  </div>
 
                  {/* Middle Row: Addresses */}
+                 <div className="flex items-center gap-2 sm:gap-3 text-[10px] sm:text-xs font-mono mb-2 sm:mb-3 bg-black/30 p-1.5 sm:p-2 rounded border border-white/5">
+                    <div className="flex-1 overflow-hidden min-w-0">
+                       <p className="text-[8px] sm:text-[9px] text-gray-600 mb-0.5 uppercase">發送方</p>
+                       <p className="text-gray-400 truncate" title={tx.fromAddress}>{maskString(tx.fromAddress, 6, 4)}</p>
                  <div className="flex items-center gap-3 text-xs font-mono mb-3 bg-black/30 p-2 rounded border border-white/5">
                     <div className="flex-1 overflow-hidden">
                        <p className="text-[9px] text-gray-600 mb-0.5 uppercase">發送方</p>
@@ -162,6 +229,9 @@ export default function WhaleAlert() {
                     <div className="flex-shrink-0 text-cyber-blue opacity-50 px-1 sm:px-0">
                        <Navigation size={12} className="rotate-90 sm:w-[14px] sm:h-[14px]" />
                     </div>
+                    <div className="flex-1 overflow-hidden min-w-0 text-right">
+                       <p className="text-[8px] sm:text-[9px] text-gray-600 mb-0.5 uppercase">接收方</p>
+                       <p className="text-gray-400 truncate" title={tx.toAddress}>{maskString(tx.toAddress, 6, 4)}</p>
                     <div className="flex-1 overflow-hidden text-right">
                        <p className="text-[9px] text-gray-600 mb-0.5 uppercase">接收方</p>
                        <p className="text-gray-400 truncate" title={tx.toAddress}>{maskString(tx.toAddress)}</p>
@@ -169,6 +239,10 @@ export default function WhaleAlert() {
                  </div>
 
                  {/* Bottom Row: TxHash and Time */}
+                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center text-[8px] sm:text-[10px] font-mono text-gray-500 gap-1 sm:gap-0">
+                    <div className="flex items-center gap-1 truncate max-w-full">
+                      <span className="text-gray-600 shrink-0">交易雜湊:</span>
+                      <a href={`https://cardanoscan.io/transaction/${tx.txHash}`} target="_blank" rel="noopener noreferrer" className="hover:text-cyber-blue transition-colors truncate">
                  <div className="flex justify-between items-center text-[10px] font-mono text-gray-500">
                     <div className="flex items-center gap-1">
                       <span className="text-gray-600">交易雜湊:</span>

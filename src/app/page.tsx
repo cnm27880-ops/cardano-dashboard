@@ -17,6 +17,11 @@ export default function Home() {
       
       {/* Dashboard Header */}
       <div className="flex flex-col gap-2">
+        <h2 className="text-2xl lg:text-3xl font-bold text-white tracking-wide flex items-center gap-2 lg:gap-3">
+          <span className="text-cyber-blue opacity-50 text-3xl lg:text-4xl">/</span>
+          Cardano 觀測站
+        </h2>
+        <p className="text-gray-400 max-w-2xl font-mono text-xs lg:text-sm">
         <h2 className="text-3xl font-bold text-white tracking-wide flex items-center gap-3">
           <span className="text-cyber-blue opacity-50 text-4xl">/</span>
           Cardano 觀測站
@@ -30,6 +35,10 @@ export default function Home() {
       <TrendStrategyHub data={currentTrendData} />
 
       {/* Main Grid Layout */}
+      <div className="flex flex-col md:grid md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6 w-full">
+        
+        {/* Card 1: Ecosystem Health */}
+        <div className="glass-card p-4 md:p-6 min-h-[400px] flex flex-col relative overflow-hidden group w-full">
       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6">
         
         {/* Card 1: Ecosystem Health */}
@@ -48,6 +57,7 @@ export default function Home() {
         </div>
 
         {/* Card 2: Developer Activity */}
+        <div className="glass-card p-4 md:p-6 min-h-[400px] flex flex-col relative overflow-hidden group xl:col-span-1 md:col-span-1 w-full">
         <div className="glass-card p-4 lg:p-6 min-h-[400px] flex flex-col relative overflow-hidden group xl:col-span-1 lg:col-span-1">
            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyber-purple to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
            <div className="absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-cyber-purple/20 rounded-tr-xl pointer-events-none"></div>
@@ -62,6 +72,7 @@ export default function Home() {
         </div>
 
         {/* Card 3: Whale Awakening Alerts */}
+        <div className="glass-card p-4 md:p-6 min-h-[400px] flex flex-col relative overflow-hidden group xl:col-span-1 md:col-span-2 w-full">
         <div className="glass-card p-4 lg:p-6 min-h-[400px] flex flex-col relative overflow-hidden group xl:col-span-1 lg:col-span-2">
            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyber-red to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
            <div className="absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-cyber-red/20 rounded-tr-xl pointer-events-none"></div>
