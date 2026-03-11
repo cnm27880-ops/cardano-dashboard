@@ -94,7 +94,7 @@ const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?:
       <div className="bg-black/80 border border-cyber-purple/30 p-3 rounded-lg backdrop-blur-md">
         <p className="text-gray-400 text-xs font-mono mb-1">{label}</p>
         <p className="text-cyber-purple font-bold text-lg">
-          {payload[0].value} <span className="text-sm font-normal text-gray-300">commits</span>
+          {payload[0].value} <span className="text-sm font-normal text-gray-300">次提交</span>
         </p>
       </div>
     );
@@ -107,43 +107,43 @@ export default function DeveloperActivity() {
 
   if (loading) {
     return (
-       <div className="flex-1 flex flex-col items-center justify-center border border-white/5 rounded-lg bg-black/20">
+       <div className="flex-1 flex flex-col items-center justify-center border border-white/5 rounded-lg bg-black/20 p-4 min-h-[200px]">
           <Activity className="text-cyber-purple animate-spin mb-3" size={24} />
-          <span className="text-cyber-purple font-mono text-sm animate-pulse">Syncing Repositories...</span>
+          <span className="text-cyber-purple font-mono text-sm animate-pulse">同步儲存庫中...</span>
        </div>
     );
   }
 
   if (error || !data) {
      return (
-       <div className="flex-1 flex flex-col items-center justify-center border border-cyber-red/30 rounded-lg bg-black/20 p-4 text-center">
+       <div className="flex-1 flex flex-col items-center justify-center border border-cyber-red/30 rounded-lg bg-black/20 p-4 text-center min-h-[200px]">
           <AlertTriangle className="text-cyber-red mb-2" size={24} />
-          <span className="text-cyber-red font-mono text-sm">GitHub API Limit Reached</span>
-          <span className="text-gray-500 text-xs mt-1">{error || "No data"}</span>
+          <span className="text-cyber-red font-mono text-sm">GitHub API 限制已達</span>
+          <span className="text-gray-500 text-xs mt-1">{error || "無資料"}</span>
        </div>
     );
   }
 
   return (
-    <div className="flex-1 flex flex-col border border-white/5 rounded-lg bg-black/20 p-5 relative">
+    <div className="flex-1 flex flex-col border border-white/5 rounded-lg bg-black/20 p-4 sm:p-5 relative">
        
        {/* Top Stats: Active Contributors */}
-       <div className="flex justify-between items-start mb-6 border-b border-white/10 pb-4">
+       <div className="flex flex-row justify-between items-start sm:items-center mb-4 sm:mb-6 border-b border-white/10 pb-4 gap-2">
           <div>
-            <p className="text-xs text-gray-500 font-mono mb-1 uppercase tracking-wider">Active Core Devs</p>
-            <div className="text-2xl font-bold text-white tracking-wide flex items-center gap-3">
-              <Users size={20} className="text-cyber-purple" />
+            <p className="text-[10px] sm:text-xs text-gray-500 font-mono mb-1 uppercase tracking-wider">活躍核心開發者</p>
+            <div className="text-xl sm:text-2xl font-bold text-white tracking-wide flex items-center gap-2 sm:gap-3">
+              <Users size={18} className="text-cyber-purple sm:w-5 sm:h-5" />
               <CountUp end={data.totalContributors} duration={2.5} />
             </div>
           </div>
-          <div className="text-right">
-            <p className="text-[10px] text-gray-600 font-mono mt-1 uppercase tracking-widest">Target Repo</p>
-            <p className="text-xs text-cyber-purple font-mono">cardano-node</p>
+          <div className="text-right flex flex-col items-end justify-start">
+            <p className="text-[8px] sm:text-[10px] text-gray-600 font-mono sm:mt-1 uppercase tracking-widest">目標儲存庫</p>
+            <p className="text-[10px] sm:text-xs text-cyber-purple font-mono">cardano-node</p>
           </div>
        </div>
 
        {/* Bar Chart: Commits Over Time */}
-       <div className="flex-1 w-full h-full min-h-[150px]">
+       <div className="flex-1 w-full h-full min-h-[150px] sm:min-h-[200px]">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data.commits} margin={{ top: 10, right: 0, left: 0, bottom: 0 }}>
               <XAxis 

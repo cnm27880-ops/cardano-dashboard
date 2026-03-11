@@ -64,9 +64,9 @@ export default function EcosystemHealth() {
 
   if (loading) {
     return (
-       <div className="flex-1 flex flex-col items-center justify-center border border-white/5 rounded-lg bg-black/20">
+       <div className="flex-1 flex flex-col items-center justify-center border border-white/5 rounded-lg bg-black/20 p-4">
           <Activity className="text-cyber-blue animate-spin mb-3" size={24} />
-          <span className="text-cyber-blue font-mono text-sm animate-pulse">Establishing Uplink...</span>
+          <span className="text-cyber-blue font-mono text-sm animate-pulse">建立連線中...</span>
        </div>
     );
   }
@@ -75,8 +75,8 @@ export default function EcosystemHealth() {
      return (
        <div className="flex-1 flex flex-col items-center justify-center border border-cyber-red/30 rounded-lg bg-black/20 p-4 text-center">
           <AlertTriangle className="text-cyber-red mb-2" size={24} />
-          <span className="text-cyber-red font-mono text-sm">Signal Lost</span>
-          <span className="text-gray-500 text-xs mt-1">{error || "No data"}</span>
+          <span className="text-cyber-red font-mono text-sm">訊號中斷</span>
+          <span className="text-gray-500 text-xs mt-1">{error || "無資料"}</span>
        </div>
     );
   }
@@ -117,26 +117,26 @@ export default function EcosystemHealth() {
     <div className="flex-1 flex flex-col border border-white/5 rounded-lg bg-black/20 p-5 relative">
        
        {/* Top Stats: Price & TVL */}
-       <div className="flex justify-between items-start mb-6 border-b border-white/10 pb-4">
+       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 border-b border-white/10 pb-4 gap-4 sm:gap-0">
           <div>
-            <p className="text-xs text-gray-500 font-mono mb-1 uppercase tracking-wider">ADA Price</p>
-            <div className="text-2xl font-bold text-white tracking-wide">
+            <p className="text-[10px] sm:text-xs text-gray-500 font-mono mb-1 uppercase tracking-wider">ADA 價格</p>
+            <div className="text-xl sm:text-2xl font-bold text-white tracking-wide">
               $<CountUp end={data.price} decimals={3} duration={2} separator="," />
             </div>
           </div>
-          <div className="text-right">
-            <p className="text-xs text-gray-500 font-mono mb-1 uppercase tracking-wider">Total Value Locked</p>
-            <div className="text-xl font-bold text-cyber-blue flex items-center justify-end gap-2">
-              <TrendingUp size={16} className="text-cyber-green" />
+          <div className="sm:text-right w-full sm:w-auto">
+            <p className="text-[10px] sm:text-xs text-gray-500 font-mono mb-1 uppercase tracking-wider">總鎖倉量</p>
+            <div className="text-lg sm:text-xl font-bold text-cyber-blue flex items-center sm:justify-end gap-2">
+              <TrendingUp size={14} className="text-cyber-green sm:w-4 sm:h-4" />
               {formatCurrency(data.tvl)}
             </div>
           </div>
        </div>
 
        {/* Circular Progress & Status */}
-       <div className="flex-1 flex flex-col items-center justify-center relative">
+       <div className="flex-1 flex flex-col items-center justify-center relative min-h-[220px]">
           
-          <div className="h-40 w-40 relative flex items-center justify-center">
+          <div className="h-32 w-32 sm:h-40 sm:w-40 relative flex items-center justify-center">
              <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
@@ -158,24 +158,24 @@ export default function EcosystemHealth() {
              
              {/* Center Content */}
              <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-               <span className="text-3xl font-bold text-white">
-                 {(data.ratio * 100).toFixed(1)}<span className="text-sm text-gray-400">%</span>
+               <span className="text-2xl sm:text-3xl font-bold text-white">
+                 {(data.ratio * 100).toFixed(1)}<span className="text-xs sm:text-sm text-gray-400">%</span>
                </span>
-               <span className="text-[10px] text-gray-500 font-mono tracking-widest mt-1">RATIO</span>
+               <span className="text-[8px] sm:text-[10px] text-gray-500 font-mono tracking-widest mt-1">佔比</span>
              </div>
           </div>
           
           {/* Status Badge */}
-          <div className={`mt-4 px-4 py-1.5 rounded-full border bg-black/50 ${
+          <div className={`mt-2 sm:mt-4 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border bg-black/50 ${
              data.ratio > 0.1 ? 'border-cyber-orange/30' : 
              data.ratio < 0.05 ? 'border-cyber-blue/30' : 'border-cyber-green/30'
           }`}>
-             <span className={`text-sm font-bold tracking-widest ${statusGlow}`}>
+             <span className={`text-xs sm:text-sm font-bold tracking-widest ${statusGlow}`}>
                {statusText}
              </span>
           </div>
 
-          <div className="mt-4 w-full flex justify-between text-xs font-mono text-gray-500 px-4">
+          <div className="mt-3 sm:mt-4 w-full flex flex-col sm:flex-row justify-between text-[10px] sm:text-xs font-mono text-gray-500 px-2 sm:px-4 gap-1 sm:gap-0 text-center sm:text-left">
              <span>MCap: {formatCurrency(data.marketCap)}</span>
              <span>TVL: {formatCurrency(data.tvl)}</span>
           </div>
