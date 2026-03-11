@@ -128,6 +128,15 @@ export default function EcosystemHealth() {
             <p className="text-[10px] sm:text-xs text-gray-500 font-mono mb-1 uppercase tracking-wider">總鎖倉量</p>
             <div className="text-lg sm:text-xl font-bold text-cyber-blue flex items-center sm:justify-end gap-2">
               <TrendingUp size={14} className="text-cyber-green sm:w-4 sm:h-4" />
+            <p className="text-xs text-gray-500 font-mono mb-1 uppercase tracking-wider">ADA 價格</p>
+            <div className="text-2xl font-bold text-white tracking-wide">
+              $<CountUp end={data.price} decimals={3} duration={2} separator="," />
+            </div>
+          </div>
+          <div className="text-right">
+            <p className="text-xs text-gray-500 font-mono mb-1 uppercase tracking-wider">總鎖倉量</p>
+            <div className="text-xl font-bold text-cyber-blue flex items-center justify-end gap-2">
+              <TrendingUp size={16} className="text-cyber-green" />
               {formatCurrency(data.tvl)}
             </div>
           </div>
@@ -137,6 +146,7 @@ export default function EcosystemHealth() {
        <div className="flex-1 flex flex-col items-center justify-center relative min-h-[220px]">
           
           <div className="h-32 w-32 sm:h-40 sm:w-40 relative flex items-center justify-center">
+          <div className="h-40 w-40 min-h-[200px] relative flex items-center justify-center">
              <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
@@ -162,6 +172,7 @@ export default function EcosystemHealth() {
                  {(data.ratio * 100).toFixed(1)}<span className="text-xs sm:text-sm text-gray-400">%</span>
                </span>
                <span className="text-[8px] sm:text-[10px] text-gray-500 font-mono tracking-widest mt-1">佔比</span>
+               <span className="text-[10px] text-gray-500 font-mono tracking-widest mt-1">佔比</span>
              </div>
           </div>
           

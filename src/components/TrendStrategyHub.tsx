@@ -111,6 +111,10 @@ export default function TrendStrategyHub({ data }: TrendStrategyHubProps) {
     >
       {/* Left: Stage Indicator */}
       <div className="flex flex-col items-start space-y-3 min-w-[200px] shrink-0">
+      className={`mb-6 rounded-xl border backdrop-blur-md p-6 sm:p-8 flex flex-col md:flex-row gap-6 md:gap-10 items-center justify-between transition-all duration-500 ${style.border} ${style.bg} ${style.shadow}`}
+    >
+      {/* Left: Stage Indicator */}
+      <div className="flex flex-col items-center md:items-start space-y-3 min-w-[200px]">
         <div className="flex items-center gap-2">
           <div className="relative flex h-3 w-3">
             {stage.theme === 'red' && <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${style.pulse}`}></span>}
@@ -125,6 +129,15 @@ export default function TrendStrategyHub({ data }: TrendStrategyHubProps) {
         <div className="flex flex-row items-center gap-3 md:gap-4 text-xs font-mono text-gray-500 mt-2">
           <span>價格: ${data.price.toFixed(3)}</span>
           <span className="inline">|</span>
+          <span className="text-gray-400 font-mono text-sm tracking-widest uppercase">市場階段指示</span>
+        </div>
+        <div className={`flex items-center gap-3 ${style.text}`}>
+          <Icon size={32} className="shrink-0" />
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-wider">{stage.name}</h2>
+        </div>
+        <div className="flex items-center gap-4 text-xs font-mono text-gray-500 mt-2">
+          <span>價格: ${data.price.toFixed(3)}</span>
+          <span className="hidden sm:inline">|</span>
           <span>TVL佔比: {(data.tvlRatio * 100).toFixed(1)}%</span>
         </div>
       </div>
@@ -133,6 +146,9 @@ export default function TrendStrategyHub({ data }: TrendStrategyHubProps) {
       <div className="flex-1 w-full border-t md:border-t-0 md:border-l border-white/10 pt-4 md:pt-0 md:pl-8">
         <h3 className="text-gray-400 font-mono text-xs md:text-sm tracking-widest uppercase mb-2 md:mb-3">本週戰術建議</h3>
         <p className={`text-sm md:text-base leading-relaxed tracking-wide ${stage.theme === 'red' ? 'text-white' : 'text-gray-300'}`}>
+      <div className="flex-1 border-t md:border-t-0 md:border-l border-white/10 pt-4 md:pt-0 md:pl-8">
+        <h3 className="text-gray-400 font-mono text-sm tracking-widest uppercase mb-3">本週戰術建議</h3>
+        <p className={`text-sm sm:text-base leading-relaxed tracking-wide ${stage.theme === 'red' ? 'text-white' : 'text-gray-300'}`}>
           {stage.advice}
         </p>
       </div>
