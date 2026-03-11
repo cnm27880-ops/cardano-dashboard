@@ -14,25 +14,7 @@ export interface WhaleTransaction {
 }
 
 export function useWhaleAlerts() {
-  const [transactions, setTransactions] = useState<WhaleTransaction[]>(() => {
-    const generateHash = (len: number) => {
-      const chars = "abcdef0123456789";
-      return Array.from({ length: len })
-        .map(() => chars[Math.floor(Math.random() * chars.length)])
-        .join("");
-    };
-    const generateAddress = () => `addr1${generateHash(58)}`;
-    const initialData: WhaleTransaction[] = Array.from({ length: 4 }).map((_, i) => ({
-      id: `initial-${i}`,
-      txHash: generateHash(64),
-      amount: Math.floor(Math.random() * 40000000) + 10000000,
-      timestamp: Date.now() - Math.floor(Math.random() * 3600000),
-      fromAddress: generateAddress(),
-      toAddress: generateAddress(),
-    }));
-    initialData.sort((a, b) => b.timestamp - a.timestamp);
-    return initialData;
-  });
+  const [transactions, setTransactions] = useState<WhaleTransaction[]>([]);
 
   useEffect(() => {
     const generateHash = (len: number) => {
@@ -42,6 +24,17 @@ export function useWhaleAlerts() {
         .join("");
     };
     const generateAddress = () => `addr1${generateHash(58)}`;
+
+    const initialData: WhaleTransaction[] = Array.from({ length: 4 }).map((_, i) => ({
+      id: `initial-${i}`,
+      txHash: generateHash(64),
+      amount: Math.floor(Math.random() * 40000000) + 10000000,
+      timestamp: Date.now() - Math.floor(Math.random() * 3600000),
+      fromAddress: generateAddress(),
+      toAddress: generateAddress(),
+    }));
+    initialData.sort((a, b) => b.timestamp - a.timestamp);
+    setTransactions(initialData);
 
     // Simulate real-time updates (every 8 to 15 seconds)
     const interval = setInterval(() => {
@@ -71,11 +64,11 @@ export function useWhaleAlerts() {
 function timeAgo(timestamp: number) {
   const seconds = Math.floor((Date.now() - timestamp) / 1000);
   
-  if (seconds < 60) return `${seconds}s ago`;
+  if (seconds < 60) return `${seconds}秒前`;
   const minutes = Math.floor(seconds / 60);
-  if (minutes < 60) return `${minutes}m ago`;
+  if (minutes < 60) return `${minutes}分鐘前`;
   const hours = Math.floor(minutes / 60);
-  return `${hours}h ago`;
+  return `${hours}小時前`;
 }
 
 // Masking addresses and hashes
@@ -91,7 +84,7 @@ export default function WhaleAlert() {
       return (
        <div className="flex-1 flex flex-col items-center justify-center border border-white/5 rounded-lg bg-black/20">
           <Activity className="text-cyber-red animate-spin mb-3" size={24} />
-          <span className="text-cyber-red font-mono text-sm animate-pulse">Scanning Mempool...</span>
+          <span className="text-cyber-red font-mono text-sm animate-pulse">掃描記憶體池中...</span>
        </div>
     );
   }
@@ -107,9 +100,9 @@ export default function WhaleAlert() {
        <div className="flex justify-between items-center px-5 py-3 border-b border-white/10 bg-black/40">
           <div className="flex items-center gap-2">
             <div className="w-1.5 h-1.5 rounded-full bg-cyber-red animate-ping"></div>
-            <span className="text-[10px] text-gray-500 font-mono uppercase tracking-widest">Live Feed</span>
+            <span className="text-[10px] text-gray-500 font-mono uppercase tracking-widest">即時動態</span>
           </div>
-          <span className="text-[10px] text-gray-500 font-mono tracking-widest">Network: MAINNET</span>
+          <span className="text-[10px] text-gray-500 font-mono tracking-widest">主網連線中</span>
        </div>
 
        {/* Notification List */}
@@ -138,11 +131,11 @@ export default function WhaleAlert() {
                       {isCritical ? (
                          <div className="flex items-center gap-1.5 bg-cyber-red/20 border border-cyber-red/50 text-cyber-red px-2 py-0.5 rounded text-[10px] font-bold tracking-widest uppercase animate-pulse">
                            <ShieldAlert size={12} />
-                           CRITICAL ALERT
+                           嚴重警報
                          </div>
                       ) : (
                          <div className="flex items-center gap-1.5 bg-cyber-orange/10 border border-cyber-orange/30 text-cyber-orange px-2 py-0.5 rounded text-[10px] font-bold tracking-widest uppercase">
-                           WHALE TX
+                           巨鯨交易
                          </div>
                       )}
                     </div>
@@ -155,14 +148,14 @@ export default function WhaleAlert() {
                  {/* Middle Row: Addresses */}
                  <div className="flex items-center gap-3 text-xs font-mono mb-3 bg-black/30 p-2 rounded border border-white/5">
                     <div className="flex-1 overflow-hidden">
-                       <p className="text-[9px] text-gray-600 mb-0.5 uppercase">From</p>
+                       <p className="text-[9px] text-gray-600 mb-0.5 uppercase">發送方</p>
                        <p className="text-gray-400 truncate" title={tx.fromAddress}>{maskString(tx.fromAddress)}</p>
                     </div>
                     <div className="flex-shrink-0 text-cyber-blue opacity-50">
                        <Navigation size={14} className="rotate-90" />
                     </div>
                     <div className="flex-1 overflow-hidden text-right">
-                       <p className="text-[9px] text-gray-600 mb-0.5 uppercase">To</p>
+                       <p className="text-[9px] text-gray-600 mb-0.5 uppercase">接收方</p>
                        <p className="text-gray-400 truncate" title={tx.toAddress}>{maskString(tx.toAddress)}</p>
                     </div>
                  </div>
@@ -170,7 +163,7 @@ export default function WhaleAlert() {
                  {/* Bottom Row: TxHash and Time */}
                  <div className="flex justify-between items-center text-[10px] font-mono text-gray-500">
                     <div className="flex items-center gap-1">
-                      <span className="text-gray-600">Tx:</span> 
+                      <span className="text-gray-600">交易雜湊:</span>
                       <a href="#" className="hover:text-cyber-blue transition-colors">
                         {maskString(tx.txHash, 6, 4)}
                       </a>

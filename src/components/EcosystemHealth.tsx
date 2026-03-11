@@ -66,7 +66,7 @@ export default function EcosystemHealth() {
     return (
        <div className="flex-1 flex flex-col items-center justify-center border border-white/5 rounded-lg bg-black/20">
           <Activity className="text-cyber-blue animate-spin mb-3" size={24} />
-          <span className="text-cyber-blue font-mono text-sm animate-pulse">Establishing Uplink...</span>
+          <span className="text-cyber-blue font-mono text-sm animate-pulse">建立連線中...</span>
        </div>
     );
   }
@@ -75,8 +75,8 @@ export default function EcosystemHealth() {
      return (
        <div className="flex-1 flex flex-col items-center justify-center border border-cyber-red/30 rounded-lg bg-black/20 p-4 text-center">
           <AlertTriangle className="text-cyber-red mb-2" size={24} />
-          <span className="text-cyber-red font-mono text-sm">Signal Lost</span>
-          <span className="text-gray-500 text-xs mt-1">{error || "No data"}</span>
+          <span className="text-cyber-red font-mono text-sm">訊號中斷</span>
+          <span className="text-gray-500 text-xs mt-1">{error || "無資料"}</span>
        </div>
     );
   }
@@ -119,13 +119,13 @@ export default function EcosystemHealth() {
        {/* Top Stats: Price & TVL */}
        <div className="flex justify-between items-start mb-6 border-b border-white/10 pb-4">
           <div>
-            <p className="text-xs text-gray-500 font-mono mb-1 uppercase tracking-wider">ADA Price</p>
+            <p className="text-xs text-gray-500 font-mono mb-1 uppercase tracking-wider">ADA 價格</p>
             <div className="text-2xl font-bold text-white tracking-wide">
               $<CountUp end={data.price} decimals={3} duration={2} separator="," />
             </div>
           </div>
           <div className="text-right">
-            <p className="text-xs text-gray-500 font-mono mb-1 uppercase tracking-wider">Total Value Locked</p>
+            <p className="text-xs text-gray-500 font-mono mb-1 uppercase tracking-wider">總鎖倉量</p>
             <div className="text-xl font-bold text-cyber-blue flex items-center justify-end gap-2">
               <TrendingUp size={16} className="text-cyber-green" />
               {formatCurrency(data.tvl)}
@@ -136,7 +136,7 @@ export default function EcosystemHealth() {
        {/* Circular Progress & Status */}
        <div className="flex-1 flex flex-col items-center justify-center relative">
           
-          <div className="h-40 w-40 relative flex items-center justify-center">
+          <div className="h-40 w-40 min-h-[200px] relative flex items-center justify-center">
              <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
@@ -161,7 +161,7 @@ export default function EcosystemHealth() {
                <span className="text-3xl font-bold text-white">
                  {(data.ratio * 100).toFixed(1)}<span className="text-sm text-gray-400">%</span>
                </span>
-               <span className="text-[10px] text-gray-500 font-mono tracking-widest mt-1">RATIO</span>
+               <span className="text-[10px] text-gray-500 font-mono tracking-widest mt-1">佔比</span>
              </div>
           </div>
           

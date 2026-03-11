@@ -10,10 +10,10 @@ export default function Home() {
       <div className="flex flex-col gap-2">
         <h2 className="text-3xl font-bold text-white tracking-wide flex items-center gap-3">
           <span className="text-cyber-blue opacity-50 text-4xl">/</span>
-          Dashboard Overview
+          Cardano 觀測站
         </h2>
         <p className="text-gray-400 max-w-2xl font-mono text-sm">
-          Monitoring critical network infrastructure, on-chain liquidity, developer activity, and large-scale entity movements within the Cardano ecosystem.
+          監測 Cardano 生態系統中的關鍵網路基礎設施、鏈上流動性、開發者活躍度以及大規模實體資金動向。
         </p>
       </div>
 
@@ -28,9 +28,9 @@ export default function Home() {
            
            <h3 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
              <span className="w-2 h-2 bg-cyber-blue rounded-sm"></span>
-             Ecosystem Health
+             生態健康度
            </h3>
-           <p className="text-xs text-gray-400 font-mono mb-6">TVL / Market Cap Ratio</p>
+           <p className="text-xs text-gray-400 font-mono mb-6">總鎖倉量 / 市值佔比</p>
            
            <EcosystemHealth />
         </div>
@@ -42,9 +42,9 @@ export default function Home() {
            
            <h3 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
              <span className="w-2 h-2 bg-cyber-purple rounded-sm"></span>
-             Developer Activity
+             Github工程活躍板
            </h3>
-           <p className="text-xs text-gray-400 font-mono mb-6">GitHub Commits (7 Days)</p>
+           <p className="text-xs text-gray-400 font-mono mb-6">GitHub 提交數 (7 天內)</p>
            
            <DeveloperActivity />
         </div>
@@ -56,9 +56,9 @@ export default function Home() {
            
            <h3 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
              <span className="w-2 h-2 bg-cyber-red rounded-sm shadow-[0_0_8px_#ff3333]"></span>
-             Whale Alerts
+             巨鯨出沒警報
            </h3>
-           <p className="text-xs text-gray-400 font-mono mb-6">Large Transactions (&gt;10M ADA)</p>
+           <p className="text-xs text-gray-400 font-mono mb-6">大額交易 (&gt;1,000萬 ADA)</p>
            
            <WhaleAlert />
         </div>
