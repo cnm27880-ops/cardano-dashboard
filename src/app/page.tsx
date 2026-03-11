@@ -1,10 +1,19 @@
 import EcosystemHealth from "@/components/EcosystemHealth";
 import DeveloperActivity from "@/components/DeveloperActivity";
 import WhaleAlert from "@/components/WhaleAlert";
+import TrendStrategyHub from "@/components/TrendStrategyHub";
 
 export default function Home() {
+  // Simulated real-time metrics that would typically come from an API/Context
+  const currentTrendData = {
+    price: 0.35, // Currently under 0.5 ADA (Stage 1)
+    tvlRatio: 0.015, // 1.5%
+    githubCommits: 350,
+    whaleActivityLevel: "medium" as const,
+  };
+
   return (
-    <div className="w-full max-w-7xl mx-auto space-y-8">
+    <div className="w-full max-w-7xl mx-auto space-y-6 lg:space-y-8">
       
       {/* Dashboard Header */}
       <div className="flex flex-col gap-2">
@@ -17,11 +26,14 @@ export default function Home() {
         </p>
       </div>
 
+      {/* Hero Section: Trend & Strategy Hub */}
+      <TrendStrategyHub data={currentTrendData} />
+
       {/* Main Grid Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6">
         
         {/* Card 1: Ecosystem Health */}
-        <div className="glass-card p-6 min-h-[400px] flex flex-col relative overflow-hidden group">
+        <div className="glass-card p-4 lg:p-6 min-h-[400px] flex flex-col relative overflow-hidden group">
            {/* Cyberpunk accent lines */}
            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyber-blue to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
            <div className="absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-cyber-blue/20 rounded-tr-xl pointer-events-none"></div>
@@ -36,7 +48,7 @@ export default function Home() {
         </div>
 
         {/* Card 2: Developer Activity */}
-        <div className="glass-card p-6 min-h-[400px] flex flex-col relative overflow-hidden group xl:col-span-1 lg:col-span-1">
+        <div className="glass-card p-4 lg:p-6 min-h-[400px] flex flex-col relative overflow-hidden group xl:col-span-1 lg:col-span-1">
            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyber-purple to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
            <div className="absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-cyber-purple/20 rounded-tr-xl pointer-events-none"></div>
            
@@ -50,7 +62,7 @@ export default function Home() {
         </div>
 
         {/* Card 3: Whale Awakening Alerts */}
-        <div className="glass-card p-6 min-h-[400px] flex flex-col relative overflow-hidden group xl:col-span-1 lg:col-span-2">
+        <div className="glass-card p-4 lg:p-6 min-h-[400px] flex flex-col relative overflow-hidden group xl:col-span-1 lg:col-span-2">
            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyber-red to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
            <div className="absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-cyber-red/20 rounded-tr-xl pointer-events-none"></div>
            

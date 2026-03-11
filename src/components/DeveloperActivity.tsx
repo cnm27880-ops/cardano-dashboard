@@ -107,7 +107,7 @@ export default function DeveloperActivity() {
 
   if (loading) {
     return (
-       <div className="flex-1 flex flex-col items-center justify-center border border-white/5 rounded-lg bg-black/20">
+       <div className="flex-1 flex flex-col items-center justify-center border border-white/5 rounded-lg bg-black/20 p-4 min-h-[200px]">
           <Activity className="text-cyber-purple animate-spin mb-3" size={24} />
           <span className="text-cyber-purple font-mono text-sm animate-pulse">同步儲存庫中...</span>
        </div>
@@ -116,7 +116,7 @@ export default function DeveloperActivity() {
 
   if (error || !data) {
      return (
-       <div className="flex-1 flex flex-col items-center justify-center border border-cyber-red/30 rounded-lg bg-black/20 p-4 text-center">
+       <div className="flex-1 flex flex-col items-center justify-center border border-cyber-red/30 rounded-lg bg-black/20 p-4 text-center min-h-[200px]">
           <AlertTriangle className="text-cyber-red mb-2" size={24} />
           <span className="text-cyber-red font-mono text-sm">GitHub API 限制已達</span>
           <span className="text-gray-500 text-xs mt-1">{error || "無資料"}</span>
@@ -125,10 +125,10 @@ export default function DeveloperActivity() {
   }
 
   return (
-    <div className="flex-1 flex flex-col border border-white/5 rounded-lg bg-black/20 p-5 relative">
+    <div className="flex-1 flex flex-col border border-white/5 rounded-lg bg-black/20 p-4 sm:p-5 relative">
        
        {/* Top Stats: Active Contributors */}
-       <div className="flex justify-between items-start mb-6 border-b border-white/10 pb-4">
+       <div className="flex flex-row justify-between items-start sm:items-center mb-4 sm:mb-6 border-b border-white/10 pb-4 gap-2">
           <div>
             <p className="text-xs text-gray-500 font-mono mb-1 uppercase tracking-wider">活躍核心開發者</p>
             <div className="text-2xl font-bold text-white tracking-wide flex items-center gap-3">

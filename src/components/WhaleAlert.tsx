@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Activity, Clock, ShieldAlert, Navigation } from "lucide-react";
 
@@ -57,7 +57,7 @@ export function useWhaleAlerts() {
     return () => clearInterval(interval);
   }, []);
 
-  return { transactions };
+  return { transactions, loading };
 }
 
 // Format the transaction time ago
@@ -78,9 +78,18 @@ function maskString(str: string, startChars: number = 8, endChars: number = 6) {
 }
 
 export default function WhaleAlert() {
-  const { transactions } = useWhaleAlerts();
+  const { transactions, loading } = useWhaleAlerts();
 
-  if (transactions.length === 0) {
+  if (loading && transactions.length === 0) {
+      return (
+       <div className="flex-1 flex flex-col items-center justify-center border border-white/5 rounded-lg bg-black/20 p-4 min-h-[200px]">
+          <Activity className="text-cyber-blue animate-spin mb-3" size={24} />
+          <span className="text-cyber-blue font-mono text-sm animate-pulse">連線至主網掃描中...</span>
+       </div>
+    );
+  }
+
+  if (!loading && transactions.length === 0) {
       return (
        <div className="flex-1 flex flex-col items-center justify-center border border-white/5 rounded-lg bg-black/20">
           <Activity className="text-cyber-red animate-spin mb-3" size={24} />
@@ -94,23 +103,22 @@ export default function WhaleAlert() {
   };
 
   return (
-    <div className="flex-1 flex flex-col border border-white/5 rounded-lg bg-black/20 relative overflow-hidden">
+    <div className="flex-1 flex flex-col border border-white/5 rounded-lg bg-black/20 relative overflow-hidden h-full min-h-[400px]">
        
        {/* List Header */}
-       <div className="flex justify-between items-center px-5 py-3 border-b border-white/10 bg-black/40">
+       <div className="flex justify-between items-center px-4 py-3 sm:px-5 sm:py-3 border-b border-white/10 bg-black/40">
           <div className="flex items-center gap-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-cyber-red animate-ping"></div>
-            <span className="text-[10px] text-gray-500 font-mono uppercase tracking-widest">即時動態</span>
+            <div className="w-1.5 h-1.5 rounded-full bg-cyber-red animate-ping"></div>            <span className="text-[10px] text-gray-500 font-mono uppercase tracking-widest">即時動態</span>
           </div>
           <span className="text-[10px] text-gray-500 font-mono tracking-widest">主網連線中</span>
        </div>
 
        {/* Notification List */}
-       <div className="flex-1 overflow-y-auto custom-scrollbar p-2">
+       <div className="flex-1 overflow-y-auto custom-scrollbar p-2 h-[300px] sm:h-auto">
          <AnimatePresence initial={false}>
            {transactions.map((tx) => {
              // Determine severity based on amount
-             const isCritical = tx.amount > 50000000; // > 50M ADA is critical
+             const isCritical = tx.amount > 10000000; // > 10M ADA is critical
 
              return (
                <motion.div
@@ -119,14 +127,14 @@ export default function WhaleAlert() {
                  animate={{ opacity: 1, y: 0, scale: 1 }}
                  exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
                  transition={{ type: "spring", stiffness: 300, damping: 24 }}
-                 className={`mb-2 p-4 rounded-lg border ${
+                 className={`mb-2 p-3 sm:p-4 rounded-lg border ${
                    isCritical 
                     ? 'bg-cyber-red/10 border-cyber-red/30 shadow-[inset_0_0_15px_rgba(255,51,51,0.1)]' 
                     : 'bg-black/40 border-white/5 hover:border-white/20'
                  } transition-colors`}
                >
                  {/* Top Row: Warning Badge + Amount */}
-                 <div className="flex justify-between items-start mb-3">
+                 <div className="flex justify-between items-start mb-2 sm:mb-3">
                     <div className="flex items-center gap-2">
                       {isCritical ? (
                          <div className="flex items-center gap-1.5 bg-cyber-red/20 border border-cyber-red/50 text-cyber-red px-2 py-0.5 rounded text-[10px] font-bold tracking-widest uppercase animate-pulse">
@@ -140,8 +148,8 @@ export default function WhaleAlert() {
                       )}
                     </div>
                     
-                    <div className={`font-mono font-bold text-lg tracking-wider ${isCritical ? 'neon-text-red' : 'text-white'}`}>
-                       {formatAmount(tx.amount)} <span className="text-xs text-gray-500 font-sans tracking-normal">ADA</span>
+                    <div className={`font-mono font-bold text-sm sm:text-lg tracking-wider ${isCritical ? 'neon-text-red' : 'text-white'}`}>
+                       {formatAmount(tx.amount)} <span className="text-[10px] sm:text-xs text-gray-500 font-sans tracking-normal">ADA</span>
                     </div>
                  </div>
 
@@ -151,8 +159,8 @@ export default function WhaleAlert() {
                        <p className="text-[9px] text-gray-600 mb-0.5 uppercase">發送方</p>
                        <p className="text-gray-400 truncate" title={tx.fromAddress}>{maskString(tx.fromAddress)}</p>
                     </div>
-                    <div className="flex-shrink-0 text-cyber-blue opacity-50">
-                       <Navigation size={14} className="rotate-90" />
+                    <div className="flex-shrink-0 text-cyber-blue opacity-50 px-1 sm:px-0">
+                       <Navigation size={12} className="rotate-90 sm:w-[14px] sm:h-[14px]" />
                     </div>
                     <div className="flex-1 overflow-hidden text-right">
                        <p className="text-[9px] text-gray-600 mb-0.5 uppercase">接收方</p>
@@ -168,8 +176,8 @@ export default function WhaleAlert() {
                         {maskString(tx.txHash, 6, 4)}
                       </a>
                     </div>
-                    <div className="flex items-center gap-1.5">
-                      <Clock size={10} />
+                    <div className="flex items-center gap-1 sm:gap-1.5 shrink-0 text-[8px] sm:text-[10px]">
+                      <Clock size={8} className="sm:w-2.5 sm:h-2.5" />
                       {timeAgo(tx.timestamp)}
                     </div>
                  </div>

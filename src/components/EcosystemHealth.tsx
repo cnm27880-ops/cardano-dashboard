@@ -64,7 +64,7 @@ export default function EcosystemHealth() {
 
   if (loading) {
     return (
-       <div className="flex-1 flex flex-col items-center justify-center border border-white/5 rounded-lg bg-black/20">
+       <div className="flex-1 flex flex-col items-center justify-center border border-white/5 rounded-lg bg-black/20 p-4">
           <Activity className="text-cyber-blue animate-spin mb-3" size={24} />
           <span className="text-cyber-blue font-mono text-sm animate-pulse">建立連線中...</span>
        </div>
@@ -117,7 +117,7 @@ export default function EcosystemHealth() {
     <div className="flex-1 flex flex-col border border-white/5 rounded-lg bg-black/20 p-5 relative">
        
        {/* Top Stats: Price & TVL */}
-       <div className="flex justify-between items-start mb-6 border-b border-white/10 pb-4">
+       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 border-b border-white/10 pb-4 gap-4 sm:gap-0">
           <div>
             <p className="text-xs text-gray-500 font-mono mb-1 uppercase tracking-wider">ADA 價格</p>
             <div className="text-2xl font-bold text-white tracking-wide">
@@ -134,7 +134,7 @@ export default function EcosystemHealth() {
        </div>
 
        {/* Circular Progress & Status */}
-       <div className="flex-1 flex flex-col items-center justify-center relative">
+       <div className="flex-1 flex flex-col items-center justify-center relative min-h-[220px]">
           
           <div className="h-40 w-40 min-h-[200px] relative flex items-center justify-center">
              <ResponsiveContainer width="100%" height="100%">
@@ -158,24 +158,24 @@ export default function EcosystemHealth() {
              
              {/* Center Content */}
              <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-               <span className="text-3xl font-bold text-white">
-                 {(data.ratio * 100).toFixed(1)}<span className="text-sm text-gray-400">%</span>
+               <span className="text-2xl sm:text-3xl font-bold text-white">
+                 {(data.ratio * 100).toFixed(1)}<span className="text-xs sm:text-sm text-gray-400">%</span>
                </span>
                <span className="text-[10px] text-gray-500 font-mono tracking-widest mt-1">佔比</span>
              </div>
           </div>
           
           {/* Status Badge */}
-          <div className={`mt-4 px-4 py-1.5 rounded-full border bg-black/50 ${
+          <div className={`mt-2 sm:mt-4 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border bg-black/50 ${
              data.ratio > 0.1 ? 'border-cyber-orange/30' : 
              data.ratio < 0.05 ? 'border-cyber-blue/30' : 'border-cyber-green/30'
           }`}>
-             <span className={`text-sm font-bold tracking-widest ${statusGlow}`}>
+             <span className={`text-xs sm:text-sm font-bold tracking-widest ${statusGlow}`}>
                {statusText}
              </span>
           </div>
 
-          <div className="mt-4 w-full flex justify-between text-xs font-mono text-gray-500 px-4">
+          <div className="mt-3 sm:mt-4 w-full flex flex-col sm:flex-row justify-between text-[10px] sm:text-xs font-mono text-gray-500 px-2 sm:px-4 gap-1 sm:gap-0 text-center sm:text-left">
              <span>MCap: {formatCurrency(data.marketCap)}</span>
              <span>TVL: {formatCurrency(data.tvl)}</span>
           </div>
