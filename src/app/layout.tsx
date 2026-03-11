@@ -62,18 +62,15 @@ export default function RootLayout({
             </a>
             <a href="#" className="flex items-center gap-2 lg:gap-3 px-4 py-2 lg:py-3 rounded-lg text-gray-400 transition-all hover:bg-white/5 hover:text-white whitespace-nowrap">
               <Activity size={18} />
-              <span className="font-medium text-sm tracking-wide hidden sm:inline">網路健康狀態</span>
-              <span className="font-medium text-sm tracking-wide sm:hidden">網路</span>
+              <span className="font-medium text-sm tracking-wide">網路健康狀態</span>
             </a>
             <a href="#" className="flex items-center gap-2 lg:gap-3 px-4 py-2 lg:py-3 rounded-lg text-gray-400 transition-all hover:bg-white/5 hover:text-white whitespace-nowrap">
               <Layers size={18} />
-              <span className="font-medium text-sm tracking-wide hidden sm:inline">DApp 指標</span>
-              <span className="font-medium text-sm tracking-wide sm:hidden">DApp</span>
+              <span className="font-medium text-sm tracking-wide">DApp 指標</span>
             </a>
             <a href="#" className="flex items-center gap-2 lg:gap-3 px-4 py-2 lg:py-3 rounded-lg text-gray-400 transition-all hover:bg-white/5 hover:text-white whitespace-nowrap">
               <Shield size={18} />
-              <span className="font-medium text-sm tracking-wide hidden sm:inline">安全協議</span>
-              <span className="font-medium text-sm tracking-wide sm:hidden">安全</span>
+              <span className="font-medium text-sm tracking-wide">安全協議</span>
             </a>
           </nav>
           
@@ -91,19 +88,13 @@ export default function RootLayout({
           <header className="h-12 lg:h-16 glass-panel flex items-center justify-between px-4 lg:px-8 border-b border-white/10 z-10 shrink-0">
             <div className="flex items-center gap-2 lg:gap-3">
               <div className="w-2 h-2 rounded-full bg-cyber-green animate-pulse shadow-[0_0_8px_#00ff66]"></div>
-              <span className="text-[10px] sm:text-xs lg:text-sm font-mono tracking-wider text-gray-300 uppercase hidden sm:inline">系統狀態: 運作中</span>
-              <span className="text-[10px] font-mono tracking-wider text-gray-300 uppercase sm:hidden">運作中</span>
+              <span className="text-sm font-mono tracking-wider text-gray-300 uppercase">系統狀態: 運作中</span>
             </div>
             
-            <div className="flex items-center gap-2 lg:gap-4 text-xs lg:text-sm text-gray-400">
-               <div className="flex items-center gap-1 lg:gap-2">
-                 <Clock size={12} className="text-cyber-blue lg:w-[14px] lg:h-[14px]" />
-                 <span className="font-mono text-[10px] lg:text-xs">最後更新: <span className="text-white">剛剛</span></span>
-               </div>
-
-               <div className="lg:hidden flex items-center gap-1 text-[10px]">
-                 <Database size={12} className="text-cyber-purple" />
-                 <span className="text-cyber-green">100%</span>
+            <div className="flex items-center gap-4 text-sm text-gray-400">
+               <div className="flex items-center gap-2">
+                 <Clock size={14} className="text-cyber-blue" />
+                 <span className="font-mono text-xs">最後更新: <span className="text-white">剛剛</span></span>
                </div>
             </div>
           </header>

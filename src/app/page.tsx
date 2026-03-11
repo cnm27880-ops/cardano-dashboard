@@ -17,11 +17,11 @@ export default function Home() {
       
       {/* Dashboard Header */}
       <div className="flex flex-col gap-2">
-        <h2 className="text-2xl lg:text-3xl font-bold text-white tracking-wide flex items-center gap-2 lg:gap-3">
-          <span className="text-cyber-blue opacity-50 text-3xl lg:text-4xl">/</span>
+        <h2 className="text-3xl font-bold text-white tracking-wide flex items-center gap-3">
+          <span className="text-cyber-blue opacity-50 text-4xl">/</span>
           Cardano 觀測站
         </h2>
-        <p className="text-gray-400 max-w-2xl font-mono text-xs lg:text-sm">
+        <p className="text-gray-400 max-w-2xl font-mono text-sm">
           監測 Cardano 生態系統中的關鍵網路基礎設施、鏈上流動性、開發者活躍度以及大規模實體資金動向。
         </p>
       </div>
