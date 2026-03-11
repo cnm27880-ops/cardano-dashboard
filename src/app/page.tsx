@@ -1,8 +1,17 @@
 import EcosystemHealth from "@/components/EcosystemHealth";
 import DeveloperActivity from "@/components/DeveloperActivity";
 import WhaleAlert from "@/components/WhaleAlert";
+import TrendStrategyHub from "@/components/TrendStrategyHub";
 
 export default function Home() {
+  // Simulated real-time metrics that would typically come from an API/Context
+  const currentTrendData = {
+    price: 0.35, // Currently under 0.5 ADA (Stage 1)
+    tvlRatio: 0.015, // 1.5%
+    githubCommits: 350,
+    whaleActivityLevel: "medium" as const,
+  };
+
   return (
     <div className="w-full max-w-7xl mx-auto space-y-6 lg:space-y-8">
       
@@ -16,6 +25,9 @@ export default function Home() {
           監測 Cardano 生態系統中的關鍵網路基礎設施、鏈上流動性、開發者活躍度以及大規模實體資金動向。
         </p>
       </div>
+
+      {/* Hero Section: Trend & Strategy Hub */}
+      <TrendStrategyHub data={currentTrendData} />
 
       {/* Main Grid Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6">

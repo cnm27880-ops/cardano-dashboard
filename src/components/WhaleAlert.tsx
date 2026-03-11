@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Activity, Clock, ShieldAlert, Navigation } from "lucide-react";
 
@@ -15,49 +15,58 @@ export interface WhaleTransaction {
 
 export function useWhaleAlerts() {
   const [transactions, setTransactions] = useState<WhaleTransaction[]>([]);
+  const [loading, setLoading] = useState(true);
+  const lastBlockHash = useRef<string | null>(null);
 
   useEffect(() => {
-    const generateHash = (len: number) => {
-      const chars = "abcdef0123456789";
-      return Array.from({ length: len })
-        .map(() => chars[Math.floor(Math.random() * chars.length)])
-        .join("");
+    let mounted = true;
+
+    const fetchLatestBlockAndTxs = async () => {
+      try {
+        const url = new URL("/api/whale-alerts", window.location.origin);
+        if (lastBlockHash.current) {
+          url.searchParams.set("lastHash", lastBlockHash.current);
+        }
+
+        const res = await fetch(url.toString());
+        if (!res.ok) throw new Error("Failed to fetch whale alerts");
+
+        const data = await res.json();
+
+        if (data.latestHash) {
+          lastBlockHash.current = data.latestHash;
+        }
+
+        const newWhaleTxs: WhaleTransaction[] = data.transactions || [];
+
+        if (newWhaleTxs.length > 0 && mounted) {
+           setTransactions((prev) => {
+             const combined = [...newWhaleTxs, ...prev];
+             // Remove duplicates based on ID and keep top 10
+             const unique = Array.from(new Map(combined.map(item => [item.id, item])).values());
+             return unique.sort((a, b) => b.timestamp - a.timestamp).slice(0, 10);
+           });
+        }
+      } catch (error) {
+        console.error("Error polling whale alerts:", error);
+      } finally {
+        if (mounted) setLoading(false);
+      }
     };
-    const generateAddress = () => `addr1${generateHash(58)}`;
 
-    const initialData: WhaleTransaction[] = Array.from({ length: 4 }).map((_, i) => ({
-      id: `initial-${i}`,
-      txHash: generateHash(64),
-      amount: Math.floor(Math.random() * 40000000) + 10000000,
-      timestamp: Date.now() - Math.floor(Math.random() * 3600000),
-      fromAddress: generateAddress(),
-      toAddress: generateAddress(),
-    }));
-    initialData.sort((a, b) => b.timestamp - a.timestamp);
-    setTransactions(initialData);
+    // Initial fetch
+    fetchLatestBlockAndTxs();
 
-    // Simulate real-time updates (every 8 to 15 seconds)
-    const interval = setInterval(() => {
-      const newTransaction: WhaleTransaction = {
-        id: `live-${Date.now()}`,
-        txHash: generateHash(64),
-        amount: Math.floor(Math.random() * 80000000) + 10000000, // 10M to 90M ADA
-        timestamp: Date.now(),
-        fromAddress: generateAddress(),
-        toAddress: generateAddress(),
-      };
+    // Poll every 20 seconds
+    const interval = setInterval(fetchLatestBlockAndTxs, 20000);
 
-      setTransactions((prev) => {
-        // Keep only the latest 8 transactions
-        const updated = [newTransaction, ...prev].slice(0, 8);
-        return updated;
-      });
-    }, Math.floor(Math.random() * 7000) + 8000);
-
-    return () => clearInterval(interval);
+    return () => {
+      mounted = false;
+      clearInterval(interval);
+    };
   }, []);
 
-  return { transactions };
+  return { transactions, loading };
 }
 
 // Format the transaction time ago
@@ -78,13 +87,21 @@ function maskString(str: string, startChars: number = 8, endChars: number = 6) {
 }
 
 export default function WhaleAlert() {
-  const { transactions } = useWhaleAlerts();
+  const { transactions, loading } = useWhaleAlerts();
 
-  if (transactions.length === 0) {
+  if (loading && transactions.length === 0) {
       return (
        <div className="flex-1 flex flex-col items-center justify-center border border-white/5 rounded-lg bg-black/20 p-4 min-h-[200px]">
-          <Activity className="text-cyber-red animate-spin mb-3" size={24} />
-          <span className="text-cyber-red font-mono text-sm animate-pulse">掃描記憶體池中...</span>
+          <Activity className="text-cyber-blue animate-spin mb-3" size={24} />
+          <span className="text-cyber-blue font-mono text-sm animate-pulse">連線至主網掃描中...</span>
+       </div>
+    );
+  }
+
+  if (!loading && transactions.length === 0) {
+      return (
+       <div className="flex-1 flex flex-col items-center justify-center border border-white/5 rounded-lg bg-black/20 p-4 min-h-[200px]">
+          <span className="text-gray-500 font-mono text-sm">目前無大額交易 (&gt;1M ADA)</span>
        </div>
     );
   }
@@ -111,7 +128,7 @@ export default function WhaleAlert() {
          <AnimatePresence initial={false}>
            {transactions.map((tx) => {
              // Determine severity based on amount
-             const isCritical = tx.amount > 50000000; // > 50M ADA is critical
+             const isCritical = tx.amount > 10000000; // > 10M ADA is critical
 
              return (
                <motion.div
@@ -132,11 +149,11 @@ export default function WhaleAlert() {
                       {isCritical ? (
                          <div className="flex items-center gap-1 sm:gap-1.5 bg-cyber-red/20 border border-cyber-red/50 text-cyber-red px-1.5 sm:px-2 py-0.5 rounded text-[8px] sm:text-[10px] font-bold tracking-widest uppercase animate-pulse">
                            <ShieldAlert size={10} className="sm:w-3 sm:h-3" />
-                           嚴重警報
+                           巨鯨交易
                          </div>
                       ) : (
                          <div className="flex items-center gap-1 sm:gap-1.5 bg-cyber-orange/10 border border-cyber-orange/30 text-cyber-orange px-1.5 sm:px-2 py-0.5 rounded text-[8px] sm:text-[10px] font-bold tracking-widest uppercase">
-                           巨鯨交易
+                           大額交易
                          </div>
                       )}
                     </div>
@@ -165,7 +182,7 @@ export default function WhaleAlert() {
                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center text-[8px] sm:text-[10px] font-mono text-gray-500 gap-1 sm:gap-0">
                     <div className="flex items-center gap-1 truncate max-w-full">
                       <span className="text-gray-600 shrink-0">交易雜湊:</span>
-                      <a href="#" className="hover:text-cyber-blue transition-colors truncate">
+                      <a href={`https://cardanoscan.io/transaction/${tx.txHash}`} target="_blank" rel="noopener noreferrer" className="hover:text-cyber-blue transition-colors truncate">
                         {maskString(tx.txHash, 6, 4)}
                       </a>
                     </div>
