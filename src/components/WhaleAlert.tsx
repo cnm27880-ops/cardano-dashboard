@@ -64,6 +64,65 @@ export function useWhaleAlerts() {
       mounted = false;
       clearInterval(interval);
     };
+  }, []); // Missing bracket here!
+
+  // Previous mock data code was overriding the real data. Removed for now to use real API.
+  /*
+  useEffect(() => {
+    const generateHash = (len: number) => {
+      const chars = "abcdef0123456789";
+      const bytes = new Uint8Array(len);
+      window.crypto.getRandomValues(bytes);
+      return Array.from(bytes)
+        .map((b) => chars[b % chars.length])
+        .join("");
+    };
+    const generateAddress = () => `addr1${generateHash(58)}`;
+
+    const initialData: WhaleTransaction[] = Array.from({ length: 4 }).map((_, i) => {
+      const amountBuffer = new Uint32Array(1);
+      const timeBuffer = new Uint32Array(1);
+      window.crypto.getRandomValues(amountBuffer);
+      window.crypto.getRandomValues(timeBuffer);
+
+      return {
+        id: `initial-${i}`,
+        txHash: generateHash(64),
+        amount: (amountBuffer[0] % 40000000) + 10000000,
+        timestamp: Date.now() - (timeBuffer[0] % 3600000),
+        fromAddress: generateAddress(),
+        toAddress: generateAddress(),
+      };
+    });
+    initialData.sort((a, b) => b.timestamp - a.timestamp);
+    setTransactions(initialData);
+
+    // Simulate real-time updates (every 8 to 15 seconds)
+    const intervalTimeBuffer = new Uint32Array(1);
+    window.crypto.getRandomValues(intervalTimeBuffer);
+    const intervalTime = (intervalTimeBuffer[0] % 7000) + 8000;
+
+    const interval = setInterval(() => {
+      const liveAmountBuffer = new Uint32Array(1);
+      window.crypto.getRandomValues(liveAmountBuffer);
+
+      const newTransaction: WhaleTransaction = {
+        id: `live-${Date.now()}`,
+        txHash: generateHash(64),
+        amount: (liveAmountBuffer[0] % 80000000) + 10000000, // 10M to 90M ADA
+        timestamp: Date.now(),
+        fromAddress: generateAddress(),
+        toAddress: generateAddress(),
+      };
+
+      setTransactions((prev) => {
+        // Keep only the latest 8 transactions
+        const updated = [newTransaction, ...prev].slice(0, 8);
+        return updated;
+      });
+    }, intervalTime);
+
+    return () => clearInterval(interval);
   }, []);
 
   return { transactions, loading };
