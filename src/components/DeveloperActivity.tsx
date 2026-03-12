@@ -139,20 +139,10 @@ export default function DeveloperActivity() {
           <div className="text-right flex flex-col items-end justify-start">
             <p className="text-[8px] sm:text-[10px] text-gray-600 font-mono sm:mt-1 uppercase tracking-widest">目標儲存庫</p>
             <p className="text-[10px] sm:text-xs text-cyber-purple font-mono">cardano-node</p>
-            <p className="text-xs text-gray-500 font-mono mb-1 uppercase tracking-wider">活躍核心開發者</p>
-            <div className="text-2xl font-bold text-white tracking-wide flex items-center gap-3">
-              <Users size={20} className="text-cyber-purple" />
-              <CountUp end={data.totalContributors} duration={2.5} />
-            </div>
-          </div>
-          <div className="text-right">
-            <p className="text-[10px] text-gray-600 font-mono mt-1 uppercase tracking-widest">目標儲存庫</p>
-            <p className="text-xs text-cyber-purple font-mono">cardano-node</p>
           </div>
        </div>
 
        {/* Bar Chart: Commits Over Time */}
-       <div className="flex-1 w-full h-full min-h-[150px] sm:min-h-[200px]">
        <div className="flex-1 w-full h-full min-h-[200px]">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data.commits} margin={{ top: 10, right: 0, left: 0, bottom: 0 }}>

@@ -64,7 +64,10 @@ export function useWhaleAlerts() {
       mounted = false;
       clearInterval(interval);
     };
+  }, []); // Missing bracket here!
 
+  // Previous mock data code was overriding the real data. Removed for now to use real API.
+  /*
   useEffect(() => {
     const generateHash = (len: number) => {
       const chars = "abcdef0123456789";
@@ -105,6 +108,7 @@ export function useWhaleAlerts() {
 
     return () => clearInterval(interval);
   }, []);
+  */
 
   return { transactions, loading };
 }
@@ -142,9 +146,6 @@ export default function WhaleAlert() {
       return (
        <div className="flex-1 flex flex-col items-center justify-center border border-white/5 rounded-lg bg-black/20 p-4 min-h-[200px]">
           <span className="text-gray-500 font-mono text-sm">目前無大額交易 (&gt;1M ADA)</span>
-       <div className="flex-1 flex flex-col items-center justify-center border border-white/5 rounded-lg bg-black/20">
-          <Activity className="text-cyber-red animate-spin mb-3" size={24} />
-          <span className="text-cyber-red font-mono text-sm animate-pulse">掃描記憶體池中...</span>
        </div>
     );
   }
@@ -164,9 +165,6 @@ export default function WhaleAlert() {
           </div>
           <span className="text-[8px] sm:text-[10px] text-gray-500 font-mono tracking-widest hidden sm:inline">主網連線中</span>
           <span className="text-[8px] sm:text-[10px] text-gray-500 font-mono tracking-widest sm:hidden">主網</span>
-            <div className="w-1.5 h-1.5 rounded-full bg-cyber-red animate-ping"></div>            <span className="text-[10px] text-gray-500 font-mono uppercase tracking-widest">即時動態</span>
-          </div>
-          <span className="text-[10px] text-gray-500 font-mono tracking-widest">主網連線中</span>
        </div>
 
        {/* Notification List */}
@@ -195,17 +193,10 @@ export default function WhaleAlert() {
                       {isCritical ? (
                          <div className="flex items-center gap-1 sm:gap-1.5 bg-cyber-red/20 border border-cyber-red/50 text-cyber-red px-1.5 sm:px-2 py-0.5 rounded text-[8px] sm:text-[10px] font-bold tracking-widest uppercase animate-pulse">
                            <ShieldAlert size={10} className="sm:w-3 sm:h-3" />
-                           巨鯨交易
-                         </div>
-                      ) : (
-                         <div className="flex items-center gap-1 sm:gap-1.5 bg-cyber-orange/10 border border-cyber-orange/30 text-cyber-orange px-1.5 sm:px-2 py-0.5 rounded text-[8px] sm:text-[10px] font-bold tracking-widest uppercase">
-                           大額交易
-                         <div className="flex items-center gap-1.5 bg-cyber-red/20 border border-cyber-red/50 text-cyber-red px-2 py-0.5 rounded text-[10px] font-bold tracking-widest uppercase animate-pulse">
-                           <ShieldAlert size={12} />
                            嚴重警報
                          </div>
                       ) : (
-                         <div className="flex items-center gap-1.5 bg-cyber-orange/10 border border-cyber-orange/30 text-cyber-orange px-2 py-0.5 rounded text-[10px] font-bold tracking-widest uppercase">
+                         <div className="flex items-center gap-1 sm:gap-1.5 bg-cyber-orange/10 border border-cyber-orange/30 text-cyber-orange px-1.5 sm:px-2 py-0.5 rounded text-[8px] sm:text-[10px] font-bold tracking-widest uppercase">
                            巨鯨交易
                          </div>
                       )}
@@ -221,10 +212,6 @@ export default function WhaleAlert() {
                     <div className="flex-1 overflow-hidden min-w-0">
                        <p className="text-[8px] sm:text-[9px] text-gray-600 mb-0.5 uppercase">發送方</p>
                        <p className="text-gray-400 truncate" title={tx.fromAddress}>{maskString(tx.fromAddress, 6, 4)}</p>
-                 <div className="flex items-center gap-3 text-xs font-mono mb-3 bg-black/30 p-2 rounded border border-white/5">
-                    <div className="flex-1 overflow-hidden">
-                       <p className="text-[9px] text-gray-600 mb-0.5 uppercase">發送方</p>
-                       <p className="text-gray-400 truncate" title={tx.fromAddress}>{maskString(tx.fromAddress)}</p>
                     </div>
                     <div className="flex-shrink-0 text-cyber-blue opacity-50 px-1 sm:px-0">
                        <Navigation size={12} className="rotate-90 sm:w-[14px] sm:h-[14px]" />
@@ -232,9 +219,6 @@ export default function WhaleAlert() {
                     <div className="flex-1 overflow-hidden min-w-0 text-right">
                        <p className="text-[8px] sm:text-[9px] text-gray-600 mb-0.5 uppercase">接收方</p>
                        <p className="text-gray-400 truncate" title={tx.toAddress}>{maskString(tx.toAddress, 6, 4)}</p>
-                    <div className="flex-1 overflow-hidden text-right">
-                       <p className="text-[9px] text-gray-600 mb-0.5 uppercase">接收方</p>
-                       <p className="text-gray-400 truncate" title={tx.toAddress}>{maskString(tx.toAddress)}</p>
                     </div>
                  </div>
 

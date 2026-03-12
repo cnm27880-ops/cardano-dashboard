@@ -5,9 +5,21 @@
 ▲ Next.js 16.1.6 (Turbopack)
 - Local:         http://localhost:3000
 - Network:       http://192.168.0.2:3000
-- Environments: .env.local
 
 ✓ Starting...
-✓ Ready in 3.6s
- GET / 200 in 2.9s (compile: 2.2s, render: 641ms)
- GET /api/whale-alerts 200 in 553ms (compile: 237ms, render: 315ms)
+✓ Ready in 2.4s
+○ Compiling / ...
+ GET / 200 in 11.8s (compile: 11.0s, render: 896ms)
+ GET /api/whale-alerts 500 in 2.1s (compile: 2.0s, render: 41ms)
+ GET / 200 in 445ms (compile: 134ms, render: 310ms)
+ GET /api/whale-alerts 500 in 15ms (compile: 6ms, render: 9ms)
+✓ Compiled in 6.6s
+○ Compiling / ...
+ GET / 200 in 7.2s (compile: 5.2s, render: 1958ms)
+ GET /api/whale-alerts 500 in 77ms (compile: 21ms, render: 55ms)
+ GET /api/whale-alerts 500 in 17ms (compile: 6ms, render: 11ms)
+Missing Blockfrost Project ID in environment. Using mock data.
+ GET /api/whale-alerts 200 in 152ms (compile: 133ms, render: 19ms)
+ GET / 200 in 127ms (compile: 9ms, render: 118ms)
+Missing Blockfrost Project ID in environment. Using mock data.
+ GET /api/whale-alerts 200 in 13ms (compile: 5ms, render: 8ms)
