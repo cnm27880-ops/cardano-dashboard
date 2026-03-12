@@ -54,20 +54,20 @@ export default function Sidebar() {
           </button>
         </div>
 
-        <nav className="flex-row lg:flex-col lg:flex-1 p-4 gap-2 lg:space-y-2 overflow-x-auto custom-scrollbar flex shrink-0">
-          <a href="#" className="flex items-center gap-2 lg:gap-3 px-4 py-2 lg:py-3 bg-white/5 rounded-lg text-cyber-blue border border-cyber-blue/20 transition-all hover:bg-white/10 whitespace-nowrap">
+        <nav className="flex-col flex-1 p-4 gap-2 lg:space-y-2 overflow-y-auto custom-scrollbar flex shrink-0">
+          <a href="#ecosystem-center" onClick={() => setIsSidebarOpen(false)} className="flex items-center gap-2 lg:gap-3 px-4 py-2 lg:py-3 bg-white/5 rounded-lg text-cyber-blue border border-cyber-blue/20 transition-all hover:bg-white/10 whitespace-nowrap">
             <Globe size={18} />
             <span className="font-medium text-sm tracking-wide">生態中心</span>
           </a>
-          <a href="#" className="flex items-center gap-2 lg:gap-3 px-4 py-2 lg:py-3 rounded-lg text-gray-400 transition-all hover:bg-white/5 hover:text-white whitespace-nowrap">
+          <a href="#network-health" onClick={() => setIsSidebarOpen(false)} className="flex items-center gap-2 lg:gap-3 px-4 py-2 lg:py-3 rounded-lg text-gray-400 transition-all hover:bg-white/5 hover:text-white whitespace-nowrap">
             <Activity size={18} />
             <span className="font-medium text-sm tracking-wide">網路健康狀態</span>
           </a>
-          <a href="#" className="flex items-center gap-2 lg:gap-3 px-4 py-2 lg:py-3 rounded-lg text-gray-400 transition-all hover:bg-white/5 hover:text-white whitespace-nowrap">
+          <a href="#dapp-metrics" onClick={() => setIsSidebarOpen(false)} className="flex items-center gap-2 lg:gap-3 px-4 py-2 lg:py-3 rounded-lg text-gray-400 transition-all hover:bg-white/5 hover:text-white whitespace-nowrap">
             <Layers size={18} />
             <span className="font-medium text-sm tracking-wide">DApp 指標</span>
           </a>
-          <a href="#" className="flex items-center gap-2 lg:gap-3 px-4 py-2 lg:py-3 rounded-lg text-gray-400 transition-all hover:bg-white/5 hover:text-white whitespace-nowrap">
+          <a href="#security-protocol" onClick={() => setIsSidebarOpen(false)} className="flex items-center gap-2 lg:gap-3 px-4 py-2 lg:py-3 rounded-lg text-gray-400 transition-all hover:bg-white/5 hover:text-white whitespace-nowrap">
             <Shield size={18} />
             <span className="font-medium text-sm tracking-wide">安全協議</span>
           </a>

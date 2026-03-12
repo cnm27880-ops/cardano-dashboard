@@ -27,13 +27,15 @@ export default function Home() {
       </div>
 
       {/* Hero Section: Trend & Strategy Hub */}
-      <TrendStrategyHub data={currentTrendData} />
+      <div id="ecosystem-center">
+        <TrendStrategyHub data={currentTrendData} />
+      </div>
 
       {/* Main Grid Layout */}
       <div className="flex flex-col lg:grid lg:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6 w-full">
         
         {/* Card 1: Ecosystem Health */}
-        <div className="glass-card p-4 lg:p-6 min-h-[400px] flex flex-col relative overflow-hidden group w-full">
+        <div id="network-health" className="glass-card p-4 lg:p-6 min-h-[400px] flex flex-col relative overflow-hidden group w-full">
            {/* Cyberpunk accent lines */}
            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyber-blue to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
            <div className="absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-cyber-blue/20 rounded-tr-xl pointer-events-none"></div>
@@ -48,7 +50,7 @@ export default function Home() {
         </div>
 
         {/* Card 2: Developer Activity */}
-        <div className="glass-card p-4 lg:p-6 min-h-[400px] flex flex-col relative overflow-hidden group xl:col-span-1 lg:col-span-1 w-full">
+        <div id="dapp-metrics" className="glass-card p-4 lg:p-6 min-h-[400px] flex flex-col relative overflow-hidden group xl:col-span-1 lg:col-span-1 w-full">
            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyber-purple to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
            <div className="absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-cyber-purple/20 rounded-tr-xl pointer-events-none"></div>
            
@@ -62,7 +64,7 @@ export default function Home() {
         </div>
 
         {/* Card 3: Whale Awakening Alerts */}
-        <div className="glass-card p-4 lg:p-6 min-h-[400px] flex flex-col relative overflow-hidden group xl:col-span-1 lg:col-span-2 w-full">
+        <div id="security-protocol" className="glass-card p-4 lg:p-6 min-h-[400px] flex flex-col relative overflow-hidden group xl:col-span-1 lg:col-span-2 w-full">
            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyber-red to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
            <div className="absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-cyber-red/20 rounded-tr-xl pointer-events-none"></div>
            
