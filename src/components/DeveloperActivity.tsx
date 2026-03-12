@@ -125,25 +125,25 @@ export default function DeveloperActivity() {
   }
 
   return (
-    <div className="flex-1 flex flex-col border border-white/5 rounded-lg bg-black/20 p-4 sm:p-5 relative">
+    <div className="flex-1 flex flex-col p-0 relative h-full">
        
        {/* Top Stats: Active Contributors */}
-       <div className="flex flex-row justify-between items-start sm:items-center mb-4 sm:mb-6 border-b border-white/10 pb-4 gap-2">
+       <div className="flex flex-row justify-between items-start mb-3 border-b border-white/10 pb-2 gap-2">
           <div>
-            <p className="text-[10px] sm:text-xs text-gray-500 font-mono mb-1 uppercase tracking-wider">活躍核心開發者</p>
-            <div className="text-xl sm:text-2xl font-bold text-white tracking-wide flex items-center gap-2 sm:gap-3">
-              <Users size={18} className="text-cyber-purple sm:w-5 sm:h-5" />
+            <p className="text-[10px] text-gray-500 font-mono mb-0.5 uppercase tracking-wider">核心開發者</p>
+            <div className="text-sm sm:text-lg font-bold text-white tracking-wide flex items-center gap-1.5">
+              <Users size={14} className="text-cyber-purple" />
               <CountUp end={data.totalContributors} duration={2.5} />
             </div>
           </div>
-          <div className="text-right flex flex-col items-end justify-start">
-            <p className="text-[8px] sm:text-[10px] text-gray-600 font-mono sm:mt-1 uppercase tracking-widest">目標儲存庫</p>
-            <p className="text-[10px] sm:text-xs text-cyber-purple font-mono">cardano-node</p>
+          <div className="text-right">
+            <p className="text-[8px] text-gray-600 font-mono mb-0.5 uppercase tracking-widest">儲存庫</p>
+            <p className="text-[10px] text-cyber-purple font-mono">cardano-node</p>
           </div>
        </div>
 
        {/* Bar Chart: Commits Over Time */}
-       <div className="flex-1 w-full h-full min-h-[200px]">
+       <div className="flex-1 w-full h-full min-h-[120px]">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data.commits} margin={{ top: 10, right: 0, left: 0, bottom: 0 }}>
               <XAxis 

@@ -113,20 +113,19 @@ export default function WhaleAlert() {
   };
 
   return (
-    <div className="flex-1 flex flex-col border border-white/5 rounded-lg bg-black/20 relative overflow-hidden h-full min-h-[400px]">
+    <div className="flex-1 flex flex-col relative overflow-hidden h-full p-0">
        
        {/* List Header */}
-       <div className="flex justify-between items-center px-4 py-3 sm:px-5 sm:py-3 border-b border-white/10 bg-black/40">
+       <div className="flex justify-between items-center mb-3 border-b border-white/10 pb-2">
           <div className="flex items-center gap-2">
             <div className="w-1.5 h-1.5 rounded-full bg-cyber-red animate-ping"></div>
-            <span className="text-[8px] sm:text-[10px] text-gray-500 font-mono uppercase tracking-widest">即時動態</span>
+            <span className="text-[10px] text-gray-500 font-mono uppercase tracking-widest">即時動態</span>
           </div>
-          <span className="text-[8px] sm:text-[10px] text-gray-500 font-mono tracking-widest hidden sm:inline">主網連線中</span>
-          <span className="text-[8px] sm:text-[10px] text-gray-500 font-mono tracking-widest sm:hidden">主網</span>
+          <span className="text-[10px] text-gray-500 font-mono tracking-widest">主網連線中</span>
        </div>
 
        {/* Notification List */}
-       <div className="flex-1 overflow-y-auto custom-scrollbar p-2 h-[300px] sm:h-auto">
+       <div className="flex-1 overflow-y-auto custom-scrollbar pr-1 max-h-[300px]">
          <AnimatePresence initial={false}>
            {transactions.map((tx) => {
              // Determine severity based on amount
@@ -181,15 +180,15 @@ export default function WhaleAlert() {
                  </div>
 
                  {/* Bottom Row: TxHash and Time */}
-                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center text-[8px] sm:text-[10px] font-mono text-gray-500 gap-1 sm:gap-0">
-                    <div className="flex items-center gap-1 truncate max-w-full">
-                      <span className="text-gray-600 shrink-0">交易雜湊:</span>
+                 <div className="flex justify-between items-center text-[8px] sm:text-[10px] font-mono text-gray-500">
+                    <div className="flex items-center gap-1 truncate">
+                      <span className="text-gray-600 shrink-0">Tx:</span>
                       <a href={`https://cardanoscan.io/transaction/${tx.txHash}`} target="_blank" rel="noopener noreferrer" className="hover:text-cyber-blue transition-colors truncate">
                         {maskString(tx.txHash, 6, 4)}
                       </a>
                     </div>
-                    <div className="flex items-center gap-1 sm:gap-1.5 shrink-0 text-[8px] sm:text-[10px]">
-                      <Clock size={8} className="sm:w-2.5 sm:h-2.5" />
+                    <div className="flex items-center gap-1 shrink-0">
+                      <Clock size={10} />
                       {timeAgo(tx.timestamp)}
                     </div>
                  </div>

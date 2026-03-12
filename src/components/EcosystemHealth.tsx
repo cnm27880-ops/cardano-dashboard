@@ -114,29 +114,29 @@ export default function EcosystemHealth() {
   };
 
   return (
-    <div className="flex-1 flex flex-col border border-white/5 rounded-lg bg-black/20 p-5 relative">
+    <div className="flex-1 flex flex-col p-0 relative h-full">
        
        {/* Top Stats: Price & TVL */}
-       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 border-b border-white/10 pb-4 gap-4 sm:gap-0">
+       <div className="flex flex-row justify-between items-start mb-3 border-b border-white/10 pb-2 gap-2">
           <div>
-            <p className="text-[10px] sm:text-xs text-gray-500 font-mono mb-1 uppercase tracking-wider">ADA 價格</p>
-            <div className="text-xl sm:text-2xl font-bold text-white tracking-wide">
+            <p className="text-[10px] text-gray-500 font-mono mb-0.5 uppercase tracking-wider">ADA 價格</p>
+            <div className="text-sm sm:text-lg font-bold text-white tracking-wide">
               $<CountUp end={data.price} decimals={3} duration={2} separator="," />
             </div>
           </div>
-          <div className="sm:text-right w-full sm:w-auto">
-            <p className="text-[10px] sm:text-xs text-gray-500 font-mono mb-1 uppercase tracking-wider">總鎖倉量</p>
-            <div className="text-lg sm:text-xl font-bold text-cyber-blue flex items-center sm:justify-end gap-2">
-              <TrendingUp size={14} className="text-cyber-green sm:w-4 sm:h-4" />
+          <div className="text-right">
+            <p className="text-[10px] text-gray-500 font-mono mb-0.5 uppercase tracking-wider">總鎖倉量</p>
+            <div className="text-xs sm:text-sm font-bold text-cyber-blue flex items-center justify-end gap-1">
+              <TrendingUp size={12} className="text-cyber-green" />
               {formatCurrency(data.tvl)}
             </div>
           </div>
        </div>
 
        {/* Circular Progress & Status */}
-       <div className="flex-1 flex flex-col items-center justify-center relative min-h-[220px]">
+       <div className="flex-1 flex flex-col items-center justify-center relative min-h-[120px]">
           
-          <div className="h-40 w-40 relative flex items-center justify-center">
+          <div className="h-24 w-24 sm:h-28 sm:w-28 relative flex items-center justify-center">
              <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
@@ -166,18 +166,13 @@ export default function EcosystemHealth() {
           </div>
           
           {/* Status Badge */}
-          <div className={`mt-2 sm:mt-4 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border bg-black/50 ${
+          <div className={`mt-2 px-2 py-0.5 sm:px-3 sm:py-1 rounded-full border bg-black/50 ${
              data.ratio > 0.1 ? 'border-cyber-orange/30' : 
              data.ratio < 0.05 ? 'border-cyber-blue/30' : 'border-cyber-green/30'
           }`}>
-             <span className={`text-xs sm:text-sm font-bold tracking-widest ${statusGlow}`}>
+             <span className={`text-[10px] sm:text-xs font-bold tracking-widest ${statusGlow}`}>
                {statusText}
              </span>
-          </div>
-
-          <div className="mt-3 sm:mt-4 w-full flex flex-col sm:flex-row justify-between text-[10px] sm:text-xs font-mono text-gray-500 px-2 sm:px-4 gap-1 sm:gap-0 text-center sm:text-left">
-             <span>MCap: {formatCurrency(data.marketCap)}</span>
-             <span>TVL: {formatCurrency(data.tvl)}</span>
           </div>
        </div>
 

@@ -2,6 +2,9 @@ import EcosystemHealth from "@/components/EcosystemHealth";
 import DeveloperActivity from "@/components/DeveloperActivity";
 import WhaleAlert from "@/components/WhaleAlert";
 import TrendStrategyHub from "@/components/TrendStrategyHub";
+import StablecoinCard from "@/components/StablecoinCard";
+import AdaBtcCard from "@/components/AdaBtcCard";
+import BtcDominanceCard from "@/components/BtcDominanceCard";
 
 export default function Home() {
   // Simulated real-time metrics that would typically come from an API/Context
@@ -10,6 +13,9 @@ export default function Home() {
     tvlRatio: 0.015, // 1.5%
     githubCommits: 350,
     whaleActivityLevel: "medium" as const,
+    stablecoinMomentum: 2.4, // USDCx increased by 2.4%
+    adaBtcRatio: 0.0000085,
+    btcDominance: 53.2,
   };
 
   return (
@@ -31,48 +37,57 @@ export default function Home() {
         <TrendStrategyHub data={currentTrendData} />
       </div>
 
-      {/* Main Grid Layout */}
-      <div className="flex flex-col lg:grid lg:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6 w-full">
+      {/* Compact Grid Layout */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 w-full">
         
-        {/* Card 1: Ecosystem Health */}
-        <div id="network-health" className="glass-card p-4 lg:p-6 min-h-[400px] flex flex-col relative overflow-hidden group w-full">
-           {/* Cyberpunk accent lines */}
+        {/* Card: Ecosystem Health */}
+        <div id="network-health" className="glass-card p-3 sm:p-4 min-h-[200px] flex flex-col relative overflow-hidden group w-full col-span-1">
            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyber-blue to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
-           <div className="absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-cyber-blue/20 rounded-tr-xl pointer-events-none"></div>
            
-           <h3 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
-             <span className="w-2 h-2 bg-cyber-blue rounded-sm"></span>
+           <h3 className="text-sm font-semibold text-white mb-1 flex items-center gap-1.5">
+             <span className="w-1.5 h-1.5 bg-cyber-blue rounded-sm"></span>
              生態健康度
            </h3>
-           <p className="text-xs text-gray-400 font-mono mb-6">總鎖倉量 / 市值佔比</p>
+           <p className="text-[10px] text-gray-400 font-mono mb-3">TVL / 市值佔比</p>
            
            <EcosystemHealth />
         </div>
 
-        {/* Card 2: Developer Activity */}
-        <div id="dapp-metrics" className="glass-card p-4 lg:p-6 min-h-[400px] flex flex-col relative overflow-hidden group xl:col-span-1 lg:col-span-1 w-full">
+        {/* Card: Developer Activity */}
+        <div id="dapp-metrics" className="glass-card p-3 sm:p-4 min-h-[200px] flex flex-col relative overflow-hidden group w-full col-span-1">
            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyber-purple to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
-           <div className="absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-cyber-purple/20 rounded-tr-xl pointer-events-none"></div>
            
-           <h3 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
-             <span className="w-2 h-2 bg-cyber-purple rounded-sm"></span>
-             Github工程活躍板
+           <h3 className="text-sm font-semibold text-white mb-1 flex items-center gap-1.5">
+             <span className="w-1.5 h-1.5 bg-cyber-purple rounded-sm"></span>
+             GitHub 活躍度
            </h3>
-           <p className="text-xs text-gray-400 font-mono mb-6">GitHub 提交數 (7 天內)</p>
+           <p className="text-[10px] text-gray-400 font-mono mb-3">提交數 (7天)</p>
            
            <DeveloperActivity />
         </div>
 
-        {/* Card 3: Whale Awakening Alerts */}
-        <div id="security-protocol" className="glass-card p-4 lg:p-6 min-h-[400px] flex flex-col relative overflow-hidden group xl:col-span-1 lg:col-span-2 w-full">
+        {/* Small Indicator Cards stacked or spread */}
+        <div className="col-span-1 h-full">
+          <StablecoinCard momentum={currentTrendData.stablecoinMomentum} />
+        </div>
+
+        <div className="col-span-1 h-full">
+          <AdaBtcCard ratio={currentTrendData.adaBtcRatio} trend="down" />
+        </div>
+
+        <div className="col-span-1 h-full">
+          <BtcDominanceCard percentage={currentTrendData.btcDominance} />
+        </div>
+
+        {/* Card: Whale Awakening Alerts (Spans 2 columns) */}
+        <div id="security-protocol" className="glass-card p-3 sm:p-4 min-h-[200px] flex flex-col relative overflow-hidden group w-full col-span-2 md:col-span-3">
            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyber-red to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
-           <div className="absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-cyber-red/20 rounded-tr-xl pointer-events-none"></div>
            
-           <h3 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
-             <span className="w-2 h-2 bg-cyber-red rounded-sm shadow-[0_0_8px_#ff3333]"></span>
+           <h3 className="text-sm font-semibold text-white mb-1 flex items-center gap-1.5">
+             <span className="w-1.5 h-1.5 bg-cyber-red rounded-sm shadow-[0_0_8px_#ff3333]"></span>
              巨鯨出沒警報
            </h3>
-           <p className="text-xs text-gray-400 font-mono mb-6">大額交易 (&gt;1,000萬 ADA)</p>
+           <p className="text-[10px] text-gray-400 font-mono mb-3">大額交易 (&gt;1,000萬 ADA)</p>
            
            <WhaleAlert />
         </div>
