@@ -243,10 +243,6 @@ export default function WhaleAlert() {
                     <div className="flex items-center gap-1 truncate max-w-full">
                       <span className="text-gray-600 shrink-0">交易雜湊:</span>
                       <a href={`https://cardanoscan.io/transaction/${tx.txHash}`} target="_blank" rel="noopener noreferrer" className="hover:text-cyber-blue transition-colors truncate">
-                 <div className="flex justify-between items-center text-[10px] font-mono text-gray-500">
-                    <div className="flex items-center gap-1">
-                      <span className="text-gray-600">交易雜湊:</span>
-                      <a href="#" className="hover:text-cyber-blue transition-colors">
                         {maskString(tx.txHash, 6, 4)}
                       </a>
                     </div>
