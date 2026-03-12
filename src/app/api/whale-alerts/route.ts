@@ -14,15 +14,32 @@ export async function GET(request: Request) {
 
     // Generate some mock whale transactions for display purposes
     const mockTxs = [];
-    if (Math.random() > 0.5) { // 50% chance to generate a transaction
+    const randomBuffer = new Uint8Array(1);
+    crypto.getRandomValues(randomBuffer);
+
+    if (randomBuffer[0] > 127) { // 50% chance to generate a transaction
         const chars = "abcdef0123456789";
-        const randomHash = () => Array.from({ length: 64 }).map(() => chars[Math.floor(Math.random() * chars.length)]).join("");
-        const randomAddr = () => `addr1${Array.from({ length: 58 }).map(() => chars[Math.floor(Math.random() * chars.length)]).join("")}`;
+
+        const randomHash = () => {
+          const bytes = new Uint8Array(64);
+          crypto.getRandomValues(bytes);
+          return Array.from(bytes).map(b => chars[b % chars.length]).join("");
+        };
+
+        const randomAddr = () => {
+          const bytes = new Uint8Array(58);
+          crypto.getRandomValues(bytes);
+          return `addr1${Array.from(bytes).map(b => chars[b % chars.length]).join("")}`;
+        };
+
+        const amountBuffer = new Uint32Array(1);
+        crypto.getRandomValues(amountBuffer);
+        const amount = (amountBuffer[0] % 40000000) + 1000000;
 
         mockTxs.push({
             id: `mock-${Date.now()}`,
             txHash: randomHash(),
-            amount: Math.floor(Math.random() * 40000000) + 1000000,
+            amount: amount,
             timestamp: Date.now(),
             fromAddress: randomAddr(),
             toAddress: randomAddr(),
