@@ -8,6 +8,7 @@ import TrendStrategyHub from "@/components/TrendStrategyHub";
 import StablecoinCard from "@/components/StablecoinCard";
 import AdaBtcCard from "@/components/AdaBtcCard";
 import BtcDominanceCard from "@/components/BtcDominanceCard";
+import FearAndGreedCard from "@/components/FearAndGreedCard";
 import { Activity } from "lucide-react";
 
 export default function DashboardClient() {
@@ -94,8 +95,12 @@ export default function DashboardClient() {
           <BtcDominanceCard percentage={btcDominance} />
         </div>
 
+        <div className="col-span-1 h-full">
+          <FearAndGreedCard />
+        </div>
+
         {/* Card: Whale Awakening Alerts (Spans 2 columns) */}
-        <div id="security-protocol" className="glass-card p-3 sm:p-4 min-h-[200px] flex flex-col relative overflow-hidden group w-full col-span-2 md:col-span-3">
+        <div id="security-protocol" className="glass-card p-3 sm:p-4 min-h-[200px] flex flex-col relative overflow-hidden group w-full col-span-2 md:col-span-2">
            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyber-red to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
 
            <h3 className="text-sm font-semibold text-white mb-1 flex items-center gap-1.5">
