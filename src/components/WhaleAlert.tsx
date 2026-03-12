@@ -124,7 +124,6 @@ export function useWhaleAlerts() {
 
     return () => clearInterval(interval);
   }, []);
-  */
 
   return { transactions, loading };
 }
