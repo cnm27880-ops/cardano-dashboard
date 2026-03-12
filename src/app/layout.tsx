@@ -38,17 +38,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-TW">
+    <html lang="zh-TW" className="scroll-smooth">
       <head>
         <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col lg:flex-row overflow-hidden bg-black text-white`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased h-[100dvh] flex flex-col lg:flex-row overflow-hidden bg-black text-white w-full`}
       >
         <Sidebar />
 
         {/* Main Content Area */}
-        <div className="flex-1 flex flex-col z-0 h-[calc(100vh-65px)] lg:h-screen overflow-hidden w-full">
+        <div className="flex-1 flex flex-col z-0 min-w-0 h-full overflow-hidden w-full relative">
           {/* Top Status Bar */}
           <header className="h-12 lg:h-16 glass-panel flex items-center justify-between px-4 lg:px-8 border-b border-white/10 z-10 shrink-0">
             <div className="flex items-center gap-2 lg:gap-3">

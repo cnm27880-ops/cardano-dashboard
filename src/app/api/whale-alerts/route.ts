@@ -95,7 +95,7 @@ export async function GET(request: Request) {
 
       // Look for any output >= WHALE_THRESHOLD_ADA
       for (const output of utxoData.outputs) {
-        const lovelaceAmount = output.amount.find((a: any) => a.unit === "lovelace");
+        const lovelaceAmount = output.amount.find((a: { unit: string; quantity: string }) => a.unit === "lovelace");
         if (lovelaceAmount) {
           const adaAmount = parseInt(lovelaceAmount.quantity, 10) / 1_000_000;
           if (adaAmount >= WHALE_THRESHOLD_ADA) {

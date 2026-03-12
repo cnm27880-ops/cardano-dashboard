@@ -15,13 +15,13 @@ interface MarketStage {
   id: number;
   name: string;
   theme: "blue" | "orange" | "red" | "purple";
-  icon: any;
+  icon: React.ElementType;
   advice: string;
 }
 
 // Core Logic: Evaluate Market Stage
 function evaluateMarketStage(data: TrendData): MarketStage {
-  const { price, tvlRatio, githubCommits, whaleActivityLevel } = data;
+  const { price } = data;
 
   if (price > 2.5) {
     return {
